@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { baseUrl } from "../constants/urls";
 import axios from "axios";
+import { Entypo } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [hotelByType, setHotelByType] = useState([]);
+  const [navigationType, setNavigationType] = useState("");
 
   useEffect(() => {
     axios
@@ -23,14 +35,17 @@ const Home = () => {
   console.log("hotelByType", hotelByType);
 
   return (
-    <View style={{ flex: 1, display: "flex" }}>
+    <View>
+      <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+        Hotel By City
+      </Text>
+
       {hotelByType.length > 0 && (
         <FlatList
           horizontal={true}
           data={hotelByType}
           keyExtractor={(item) => item.id}
           renderItem={(item, index) => {
-            console.log("item", item);
             return (
               <View style={styles.hotelTypeCard} key={index}>
                 <View
@@ -46,7 +61,7 @@ const Home = () => {
                     style={{ height: 40, width: 40, borderRadius: 20 }}
                   />
                   <Text
-                    style={{ paddingLeft: 5, fontSize: 18, fontWeight: "600" }}
+                    style={{ paddingLeft: 5, fontSize: 18, fontWeight: "400" }}
                   >
                     {item.item.type}
                   </Text>
@@ -56,6 +71,39 @@ const Home = () => {
           }}
         />
       )}
+
+      <View style={styles.bottomTabBar}>
+        <TouchableOpacity style={styles.button}>
+          <Entypo name="home" size={20} color="black" />
+          <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+            Home
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            navigation.navigate("hotels");
+            setNavigationType("hotels")
+          }}
+        >
+          <FontAwesome5 name="hotel" size={20} color="black" />
+          <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+            Hotels
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <FontAwesome name="map-marker" size={20} color="black" />
+          <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+            Map
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <FontAwesome name="user" size={20} color="black" />
+          <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+            Profile
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -73,25 +121,30 @@ const styles = StyleSheet.create({
     shadowRadius: 11.95,
 
     elevation: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     minWidth: 120,
     height: 50,
     backgroundColor: "white",
     marginRight: 10,
     borderRadius: 25,
-    // alignItems:"center",
-    paddingTop: 5,
+    paddingVertical: 5,
     alignContent: "center",
     marginVertical: 10,
   },
-  // profileCard: {
-  //   alignItems: "center",
-  //   backgroundColor: "#8CC8FF",
-  //   borderRadius: 10,
-  //   paddingVertical: 20,
-  //   paddingHorizontal: 20,
-  //   width: "100%",
-  //   height: 50,
-  //   marginBottom: 5,
-  // },
+  bottomTabBar: {
+    backgroundColor: "white",
+    alignContent: "center",
+    marginVertical: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  button: {
+    height: 50,
+    width: "25%",
+    backgroundColor: "#8CC8FF",
+    alignItems: "center",
+    borderTopRightRadius: 25,
+    borderBottomLeftRadius: 25,
+  },
 });
