@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { baseUrl } from "../constants/urls";
 import axios from "axios";
+import Header from "../components/Header";
 
-const Hotels = () => {
+const Hotels = ({ navigation }) => {
   const [hotelByType, setHotelByType] = useState([]);
 
   useEffect(() => {
@@ -24,6 +25,14 @@ const Hotels = () => {
 
   return (
     <View>
+      <Header
+        rightIconShown={true}
+        leftIconShown={true}
+        onPressLeftIcon={() => {
+          navigation.goBack();
+        }}
+      />
+
       {hotelByType.length > 0 &&
         hotelByType.map((item) => {
           return (

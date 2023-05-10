@@ -13,6 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import Header from "../components/Header";
 
 const Home = ({ navigation }) => {
   const [hotelByType, setHotelByType] = useState([]);
@@ -36,6 +37,13 @@ const Home = ({ navigation }) => {
 
   return (
     <View>
+      <Header
+        rightIconShown={true}
+        leftIconShown={true}
+        onPressRightIcon={() => {
+          navigation.openDrawer();
+        }}
+      />
       <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
         Hotel By City
       </Text>
@@ -45,6 +53,7 @@ const Home = ({ navigation }) => {
           horizontal={true}
           data={hotelByType}
           keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
           renderItem={(item, index) => {
             return (
               <View style={styles.hotelTypeCard} key={index}>
@@ -83,7 +92,7 @@ const Home = ({ navigation }) => {
           style={styles.button}
           onPress={() => {
             navigation.navigate("hotels");
-            setNavigationType("hotels")
+            setNavigationType("hotels");
           }}
         >
           <FontAwesome5 name="hotel" size={20} color="black" />
@@ -138,13 +147,14 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    top: 675,
   },
   button: {
     height: 50,
     width: "25%",
-    backgroundColor: "#8CC8FF",
+    // backgroundColor: "#8CC8FF",
     alignItems: "center",
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
+    // borderTopRightRadius: 25,
+    // borderBottomLeftRadius: 25,
   },
 });
