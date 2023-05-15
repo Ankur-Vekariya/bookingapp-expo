@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { baseUrl } from "../constants/urls";
 import axios from "axios";
 import Header from "../components/Header";
+import { colors } from "../constants/colors";
 
 const Hotels = ({ navigation }) => {
-  const [hotelByType, setHotelByType] = useState([]);
+  const [hotels, setHotels] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${baseUrl}/hotels/countByType`)
+      .get(`${baseUrl}/hotels/`)
       .then(function (response) {
         // handle success
-        setHotelByType(response.data);
+        setHotels(response.data);
         console.log(response);
       })
       .catch(function (error) {
@@ -21,7 +29,7 @@ const Hotels = ({ navigation }) => {
       });
   }, []);
 
-  console.log("hotelByType", hotelByType);
+  console.log("hotels", hotels);
 
   return (
     <View>
@@ -32,20 +40,84 @@ const Hotels = ({ navigation }) => {
           navigation.goBack();
         }}
       />
-
-      {hotelByType.length > 0 &&
-        hotelByType.map((item) => {
-          return (
-            <View style={styles.profileCard}>
-              {/* <Image
-                style={{ height: 50, width: 50 }}
-                source={require("../../../assets/profile.png")}
-              /> */}
-              <Text>+917228821212</Text>
-              <Text>ankurvekariya2001@gmail.com</Text>
-            </View>
-          );
-        })}
+      {hotels.length > 0 && (
+        <FlatList
+          data={hotels}
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          renderItem={(item, index) => {
+            return (
+              <TouchableOpacity
+                style={styles.hotelTypeCard}
+                onPress={() => navigation.navigate("hotel-detail")}
+              >
+                <Image
+                  source={require("../assets/hotel.jpg")}
+                  style={{ height: 200, width: "100%", borderRadius: 20 }}
+                />
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        paddingLeft: 5,
+                        fontSize: 20,
+                        fontWeight: "400",
+                      }}
+                    >
+                      {item?.item?.name}
+                    </Text>
+                    <Text
+                      style={{
+                        paddingLeft: 5,
+                        fontSize: 18,
+                        fontWeight: "400",
+                      }}
+                    >
+                      {item?.item?.title}
+                    </Text>
+                    <Text
+                      style={{
+                        paddingLeft: 5,
+                        fontSize: 14,
+                        fontWeight: "400",
+                      }}
+                    >
+                      {item?.item?.desc}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: colors.light,
+                      width: "20%",
+                      height: "60%",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        alignContent: "center",
+                        // paddingLeft: 5,
+                        // fontSize: 14,
+                        // fontWeight: "400",
+                      }}
+                    >
+                      {"Book"}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      )}
     </View>
   );
 };
@@ -53,7 +125,7 @@ const Hotels = ({ navigation }) => {
 export default Hotels;
 
 const styles = StyleSheet.create({
-  profileCard: {
+  hotelTypeCard: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -62,16 +134,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.48,
     shadowRadius: 11.95,
 
-    elevation: 18,
-    alignItems: "center",
-    backgroundColor: "#8CC8FF",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#3E83BE",
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    elevation: 5,
     width: "100%",
-    height: 150,
-    marginBottom: 5,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 10,
+    alignContent: "center",
+    marginVertical: 10,
   },
 });
