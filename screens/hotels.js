@@ -94,7 +94,7 @@ const Hotels = ({ navigation }) => {
                   </View>
                   <View
                     style={{
-                      backgroundColor: colors.light,
+                      backgroundColor: colors.accent,
                       width: "20%",
                       height: "60%",
                       borderRadius: 10,

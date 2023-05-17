@@ -14,7 +14,7 @@ const Header = ({
     <View
       style={{
         height: 50,
-        backgroundColor: colors.light,
+        backgroundColor: colors.main,
         display: "flex",
         justifyContent: "space-between",
         marginTop: 35,

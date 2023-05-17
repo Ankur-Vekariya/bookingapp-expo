@@ -16,7 +16,7 @@ import { colors } from "../constants/colors";
 import { useState } from "react";
 import Header from "../components/Header";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
