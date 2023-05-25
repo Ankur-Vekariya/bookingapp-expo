@@ -140,6 +140,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     alignContent: "center",
-    marginVertical: 10,
+    marginVertical: 5,
   },
 });

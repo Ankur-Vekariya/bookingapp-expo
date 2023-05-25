@@ -100,7 +100,9 @@ const Home = ({ navigation }) => {
             Hotels
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => {
+            navigation.navigate("maps");
+          }}>
           <FontAwesome name="map-marker" size={20} color="black" />
           <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
             Map
