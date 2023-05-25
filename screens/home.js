@@ -14,6 +14,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import Header from "../components/Header";
+import { colors } from "../constants/colors";
 
 const Home = ({ navigation }) => {
   const [hotelByType, setHotelByType] = useState([]);
@@ -80,8 +81,62 @@ const Home = ({ navigation }) => {
           }}
         />
       )}
+      <View
+        style={{
+          paddingHorizontal: 10,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
+          Hotels
+        </Text>
+        <Text
+          style={{
+            paddingLeft: 5,
+            fontSize: 16,
+            fontWeight: "600",
+            color: colors.main,
+          }}
+        >
+          View All
+        </Text>
+      </View>
+      {hotelByType.length > 0 && (
+        <FlatList
+          horizontal={true}
+          data={hotelByType}
+          keyExtractor={(item) => item.id}
+          showsHorizontalScrollIndicator={false}
+          renderItem={(item, index) => {
+            return (
+              <View style={styles.featured} key={index}>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    source={require("../assets/hotel.jpg")}
+                    style={{ height: 40, width: 40, borderRadius: 20 }}
+                  />
+                  <Text
+                    style={{ paddingLeft: 5, fontSize: 18, fontWeight: "400" }}
+                  >
+                    {item.item.type}
+                  </Text>
+                </View>
+              </View>
+            );
+          }}
+        />
+      )}
 
-      <View style={styles.bottomTabBar}>
+      {/* <View style={styles.bottomTabBar}>
         <TouchableOpacity style={styles.button}>
           <Entypo name="home" size={20} color="black" />
           <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
@@ -100,9 +155,12 @@ const Home = ({ navigation }) => {
             Hotels
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
             navigation.navigate("maps");
-          }}>
+          }}
+        >
           <FontAwesome name="map-marker" size={20} color="black" />
           <Text style={{ paddingLeft: 5, fontSize: 16, fontWeight: "600" }}>
             Map
@@ -114,7 +172,7 @@ const Home = ({ navigation }) => {
             Profile
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -135,6 +193,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     minWidth: 120,
     height: 50,
+    backgroundColor: "white",
+    marginRight: 10,
+    borderRadius: 25,
+    paddingVertical: 5,
+    alignContent: "center",
+    marginVertical: 10,
+  },
+  featured: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+
+    elevation: 5,
+    paddingHorizontal: 5,
+    minWidth: 240,
+    height: 200,
     backgroundColor: "white",
     marginRight: 10,
     borderRadius: 25,
